@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/wdio wdio.conf.js",
-    "zalenium:setup": "docker run --rm -ti --name zalenium -p 4444:4444 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/videos:/home/seluser/videos --privileged dosel/zalenium start --maxTestSessions 6",
+    "test:local": "./node_modules/.bin/wdio wdio.conf.js",
+    "test:zalenium": "./node_modules/.bin/wdio wdio.conf.zalenium.js",
+    "test:withZaleniumSetup": "npm run --silent zalenium:setup && docker wait zalenium && ./node_modules/.bin/wdio wdio.conf.zalenium.js",
+    "zalenium:setup": "docker run -dit --rm -ti --name zalenium -p 4444:4444 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/videos:/home/seluser/videos --privileged dosel/zalenium start --maxTestSessions 6 --videoRecordingEnabled false",
     "zalenium:down": "docker stop zalenium",
     "allure-report": "node_modules/.bin/allure generate ./test/reports/allure-results -c && allure open"
   },
