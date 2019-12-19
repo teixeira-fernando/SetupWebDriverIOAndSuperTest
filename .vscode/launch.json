@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [ 
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Run in debug - WebDriverIO",
+            "port": 5859,
+            "timeout": 60000,
+            "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/wdio",
+            "cwd": "${workspaceRoot}",
+            "console": "integratedTerminal",
+            "args": [
+                "--spec", "${relativeFile}"
+                //"--spec", "foo.spec.js"
+            // "--spec main.js" will be passed to your executable as
+            // "wdio '--spec main.js'" (which isn't what you want)
+            ],
+            "env": {
+                "DEBUG": "1" 
+                // use an environment variable to be able
+                // to toggle debug mode on and off
+            }
+        }
+    ]
+}
