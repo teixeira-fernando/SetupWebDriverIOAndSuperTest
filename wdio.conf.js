@@ -33,10 +33,11 @@ exports.config = {
     connectionRetryCount: 3,
     services: ['selenium-standalone'],
     framework: 'cucumber',
-    reporters: ['spec', ['allure', {
-        outputDir: './test/reports/allure-results/',
-        disableWebdriverStepsReporting: true,
-        disableWebdriverScreenshotsReporting: true
+    reporters: ['spec', ['junit', {
+        outputDir: './test/reports/junit-results/',
+        outputFileFormat: (opts) => { // optional
+            return `TEST-wdio.junit.${opts.cid}.html`;
+        },
     }]],
     cucumberOpts: {
         require: ['./test/step-definitions/*.js'], // <string[]> (file/dir) require files before executing features

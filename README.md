@@ -1,4 +1,4 @@
-# Midhaz E2E Tests
+# E2E Tests with WebDriver IO - Setup
 
 # Stack: 
 * NPM
