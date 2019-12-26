@@ -1,30 +1,38 @@
-version: "3.7"
-
+version: '2'
 services:
-  zalenium:
-    image: dosel/zalenium
-    hostname: zalenium
-    deploy:
-      placement:
-        constraints:
-            - node.role == manager
-    labels:
-        - "de.zalando.gridRole=hub" # important for us to identify the node which runs zalenium hub
-    ports:
-        - "4444:4444"
-        - "8000:8000" # port for remote debugging zalenium code
-    networks:
-        - zalenium # attachable overlay network to use
-    volumes:
-        - /var/run/docker.sock:/var/run/docker.sock
-        - /tmp/videos:/home/seluser/videos
-    environment:
-        - PULL_SELENIUM_IMAGE=true
-        - ZALENIUM_PROXY_CLEANUP_TIMEOUT=1800
-    command: ["start", "--swarmOverlayNetwork", "STACK_zalenium", "--videoRecordingEnabled", "false"]
-    
+    webdriverio:
+        image: huli/webdriverio:latest
+        depends_on:
+            - chrome
+            - firefox
+            - hub
+        environment:
+            - HUB_PORT_4444_TCP_ADDR=hub
+            - HUB_PORT_4444_TCP_PORT=4444
+        volumes:
+            - /app
 
-networks:
-    zalenium:
-        driver: overlay
-        attachable: true
+    hub:
+        image: selenium/hub
+        ports:
+            - 4444:4444
+
+    firefox:
+        image: selenium/node-firefox-debug
+        ports:
+            - 5901:5900
+        environment:
+            - HUB_PORT_4444_TCP_ADDR=hub
+            - HUB_PORT_4444_TCP_PORT=4444
+        depends_on:
+            - hub
+
+    chrome:
+        image: selenium/node-chrome-debug
+        ports:
+            - 5900:5900
+        environment:
+            - HUB_PORT_4444_TCP_ADDR=hub
+            - HUB_PORT_4444_TCP_PORT=4444
+        depends_on:
+            - hub
