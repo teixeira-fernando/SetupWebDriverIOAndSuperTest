@@ -40,7 +40,7 @@ exports.config = {
     reporters: ['spec', ['allure', {
         outputDir: './test/reports/allure-results/',
         disableWebdriverStepsReporting: true,
-        disableWebdriverScreenshotsReporting: true,
+        disableWebdriverScreenshotsReporting: false,
         useCucumberStepReporter: true
     }]],
     cucumberOpts: {
@@ -65,5 +65,10 @@ exports.config = {
         global.expect = chai.expect;
         global.assert = chai.assert;
         chai.Should();
+    },
+    afterTest: function(test) {
+        if (test.error !== undefined) {
+            browser.takeScreenshot();
+        }
     }
 }

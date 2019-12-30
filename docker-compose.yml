@@ -1,38 +1,24 @@
-version: '2'
+version: "2"
 services:
-    webdriverio:
-        image: huli/webdriverio:latest
-        depends_on:
-            - chrome
-            - firefox
-            - hub
-        environment:
-            - HUB_PORT_4444_TCP_ADDR=hub
-            - HUB_PORT_4444_TCP_PORT=4444
-        volumes:
-            - /app
-
     hub:
         image: selenium/hub
         ports:
             - 4444:4444
-
+        environment:
+            GRID_MAX_SESSION: 10
     firefox:
-        image: selenium/node-firefox-debug
-        ports:
-            - 5901:5900
-        environment:
-            - HUB_PORT_4444_TCP_ADDR=hub
-            - HUB_PORT_4444_TCP_PORT=4444
+        image: selenium/node-firefox
         depends_on:
             - hub
-
+        environment:
+            HUB_HOST: hub
+            NODE_MAX_INSTANCES: 5
+            NODE_MAX_SESSION: 5
     chrome:
-        image: selenium/node-chrome-debug
-        ports:
-            - 5900:5900
-        environment:
-            - HUB_PORT_4444_TCP_ADDR=hub
-            - HUB_PORT_4444_TCP_PORT=4444
+        image: selenium/node-chrome
         depends_on:
             - hub
+        environment:
+            HUB_HOST: hub
+            NODE_MAX_INSTANCES: 5
+            NODE_MAX_SESSION: 5

@@ -1,16 +1,17 @@
 {
   "name": "E2E",
   "version": "1.0.0",
-  "description": "", 
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test:local": "./node_modules/.bin/wdio wdio.conf.js",
-    "test:zalenium": "./node_modules/.bin/wdio wdio.conf.zalenium.js",
-    "test:withZaleniumSetup": "npm run --silent zalenium:setup && docker wait zalenium && ./node_modules/.bin/wdio wdio.conf.zalenium.js",
+    "test:remoteGrid": "./node_modules/.bin/wdio wdio.conf.remote.js",
+    "test:withZaleniumSetup": "npm run --silent zalenium:setup && docker wait zalenium && ./node_modules/.bin/wdio wdio.conf.remote.js",
     "zalenium:setup": "docker run -dit --rm -ti --name zalenium -p 4444:4444 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/videos:/home/seluser/videos --privileged dosel/zalenium start --maxTestSessions 6 --videoRecordingEnabled false",
     "zalenium:down": "docker stop zalenium",
     "docker:up:grid": "docker-compose up -d",
     "docker:down:grid": "docker-compose down",
+    "test:withDockerSetup": "npm run docker:up:grid && npm run test:remoteGrid",
     "allure-report": "node_modules/.bin/allure generate ./test/reports/allure-results -c && allure open"
   },
   "keywords": [],
