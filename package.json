@@ -18,6 +18,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@rpii/wdio-html-reporter": "^0.8.3",
     "@types/webdriverio": "^5.0.0",
     "@wdio/allure-reporter": "^5.11.0",
     "@wdio/cli": "^5.11.5",
@@ -30,7 +31,24 @@
     "chai": "^4.2.0",
     "wdio-selenium-standalone-service": "0.0.12",
     "wdio-spec-reporter": "^0.1.5",
-    "webdriverio": "^5.11.5"
+    "webdriverio": "^5.11.5",
+    "@babel/cli": "^7.5.0",
+    "@babel/core": "^7.5.0",
+    "@babel/polyfill": "^7.4.4",
+    "@babel/preset-env": "^7.5.0",
+    "@babel/register": "^7.4.4"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ]
+  }
 }

@@ -22,12 +22,13 @@ exports.config = {
         }
     ],
     sync: true,
-    logLevel: 'error',
+    logLevel: 'trace',
+    outputDir: './test/reports/output',
     coloredLogs: true,
     deprecationWarnings: true,
     bail: 0,
     screenshotPath: './test/reports/errorShots/',
-    baseUrl: 'http://localhost',
+    baseUrl: 'http://todomvc.com/examples/angularjs/#/',
     waitforTimeout: 10000,
     connectionRetryTimeout: 90000,
     connectionRetryCount: 3,
@@ -42,17 +43,24 @@ exports.config = {
         disableWebdriverStepsReporting: true,
         disableWebdriverScreenshotsReporting: false,
         useCucumberStepReporter: true
-    }]],
+    }],
+        ['junit', {
+            outputDir: './test/reports/junit-results/',
+            outputFileFormat: (opts) => { // optional
+                return `TEST-wdio.junit.${opts.cid}.html`;
+            },
+        }]],
     cucumberOpts: {
+        requireModule: ['@babel/register'],
         require: ['./test/step-definitions/*.js'], // <string[]> (file/dir) require files before executing features
-        backtrace: false, // <boolean> show full backtrace for errors
+        backtrace: true, // <boolean> show full backtrace for errors
         compiler: [], // <string[]> ("extension:module") require files with the given EXTENSION after requiring MODULE (repeatable)
         dryRun: false, // <boolean> invoke formatters without executing steps
         failFast: false, // <boolean> abort the run on first failure
         format: ['pretty'], // <string[]> (type[:path]) specify the output format, optionally supply PATH to redirect formatter output (repeatable)
         colors: true, // <boolean> disable colors in formatter output
         snippets: true, // <boolean> hide step definition snippets for pending steps
-        source: true, // <boolean> hide source uris
+        source: false, // <boolean> hide source uris
         profile: [], // <string[]> (name) specify the profile to use
         strict: false, // <boolean> fail if there are any undefined or pending steps
         tags: [], // <string[]> (expression) only execute the features or scenarios with tags matching the expression
@@ -70,5 +78,13 @@ exports.config = {
         if (test.error !== undefined) {
             browser.takeScreenshot();
         }
+        browser.localStorage('DELETE');
+        browser.refresh();
+    },
+    afterScenario: function (scenario) {
+        //browser.deleteCookie();
+        // browser.refresh();
+        browser.localStorage('DELETE');
+        browser.refresh();
     }
-}
+};
