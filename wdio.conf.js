@@ -5,20 +5,17 @@ exports.config = {
         './test/features/**/*.feature'
     ],
     exclude: [],
-    maxInstances: 10,
     capabilities: [
         {
-            maxInstances: 5,
             browserName: 'chrome'
         }
     ],
     sync: true,
-    logLevel: 'trace',
+    logLevel: 'error',
     outputDir: './test/reports/output',
     coloredLogs: true,
     deprecationWarnings: true,
     bail: 0,
-    screenshotPath: './test/reports/errorShots/',
     baseUrl: 'http://todomvc.com/examples/angularjs/#/',
     waitforTimeout: 10000,
     connectionRetryTimeout: 90000,
@@ -27,7 +24,7 @@ exports.config = {
     framework: 'cucumber',
     reporters: ['spec', ['allure', {
         outputDir: './test/reports/allure-results/',
-        disableWebdriverStepsReporting: true,
+        disableWebdriverStepsReporting: false,
         disableWebdriverScreenshotsReporting: false,
         useCucumberStepReporter: true
     }],
@@ -61,16 +58,7 @@ exports.config = {
         global.assert = chai.assert;
         chai.Should();
     },
-    afterTest: function (test) {
-        if (test.error !== undefined) {
-            browser.takeScreenshot();
-        }
-        browser.clearLocalStorage();
-        browser.refresh();
-    },
     afterScenario: function (uri, feature, error, scenario, result, sourceLocation) {
-        //browser.deleteCookie();
-        // browser.refresh();
         browser.clearLocalStorage();
         browser.refresh();
     }

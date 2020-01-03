@@ -8,6 +8,7 @@ Given(/^I am on the list items page$/, function () {
 });
 
 When(/^I create 1 new item named "([^"]*)"$/, function (itemTitle) {
+    allureReporter.addArgument('TestParameter', itemTitle);
     todoListPage.createNewTodoItem(itemTitle);
 });
 
@@ -29,7 +30,7 @@ Then(/^this repeated item will be added to my list$/, function () {
 });
 
 Then(/^no items will be added to my list$/, function () {
-    assert.equal(todoListPage.lastItemIndex, 1)
+    assert.equal(todoListPage.lastItemIndex, 0)
 });
 
 After((scenario)=>{
