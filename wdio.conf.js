@@ -1,14 +1,12 @@
 exports.config = {
     debug: process.env.DEBUG === '1',
     execArgv: process.env.DEBUG === '1' ? ['--inspect-brk=127.0.0.1:5859'] : [],
-    specs: [
-        './test/features/**/*.feature'
-    ],
+    specs: ['./test/features/**/*.feature'],
     exclude: [],
     capabilities: [
         {
-            browserName: 'chrome'
-        }
+            browserName: 'chrome',
+        },
     ],
     sync: true,
     logLevel: 'error',
@@ -22,18 +20,28 @@ exports.config = {
     connectionRetryCount: 3,
     services: ['selenium-standalone'],
     framework: 'cucumber',
-    reporters: ['spec', ['allure', {
-        outputDir: './test/reports/allure-results/',
-        disableWebdriverStepsReporting: false,
-        disableWebdriverScreenshotsReporting: false,
-        useCucumberStepReporter: true
-    }],
-        ['junit', {
-            outputDir: './test/reports/junit-results/',
-            outputFileFormat: (opts) => { // optional
-                return `TEST-wdio.junit.${opts.cid}.html`;
+    reporters: [
+        'spec',
+        [
+            'allure',
+            {
+                outputDir: './test/reports/allure-results/',
+                disableWebdriverStepsReporting: false,
+                disableWebdriverScreenshotsReporting: false,
+                useCucumberStepReporter: true,
             },
-        }]],
+        ],
+        [
+            'junit',
+            {
+                outputDir: './test/reports/junit-results/',
+                outputFileFormat: (opts) => {
+                    // optional
+                    return `TEST-wdio.junit.${opts.cid}.html`;
+                },
+            },
+        ],
+    ],
     cucumberOpts: {
         requireModule: ['@babel/register'],
         require: ['./test/step-definitions/*.js'], // <string[]> (file/dir) require files before executing features
@@ -52,14 +60,14 @@ exports.config = {
         ignoreUndefinedDefinitions: true, // <boolean> Enable this config to treat undefined definitions as warnings.
     },
 
-    before: function () {
-        var chai = require('chai');
+    before() {
+        const chai = require('chai');
         global.expect = chai.expect;
         global.assert = chai.assert;
         chai.Should();
     },
-    afterScenario: function (uri, feature, error, scenario, result, sourceLocation) {
+    afterScenario() {
         browser.clearLocalStorage();
         browser.refresh();
-    }
+    },
 };

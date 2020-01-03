@@ -1,0 +1,7 @@
+.idea/*
+.vscode/*
+allure-report/*
+node_modules/*
+yarn.lock
+babel.config.js
+jsconfig.json

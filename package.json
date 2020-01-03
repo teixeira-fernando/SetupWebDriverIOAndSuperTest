@@ -12,7 +12,11 @@
     "docker:up:grid": "docker-compose up -d",
     "docker:down:grid": "docker-compose down",
     "test:withDockerSetup": "npm run docker:up:grid && npm run test:remoteGrid",
-    "allure-report": "node_modules/.bin/allure generate ./test/reports/allure-results -c && allure open"
+    "allure-report": "node_modules/.bin/allure generate ./test/reports/allure-results -c && allure open",
+    "code:check": "yarn code:lint && yarn code:prettier",
+    "code:format": "yarn code:lint --fix --quiet && yarn code:prettier --write",
+    "code:lint": "eslint .",
+    "code:prettier": "prettier --check \"**/*.js*\""
   },
   "keywords": [],
   "author": "",
@@ -33,12 +37,18 @@
     "@wdio/selenium-standalone-service": "^5.16.10",
     "@wdio/spec-reporter": "^5.16.11",
     "@wdio/sync": "^5.17.0",
-    "chai": "^4.2.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-plugin-import": "^2.19.1",
+    "prettier-eslint": "^9.0.1",
     "wdio-selenium-standalone-service": "0.0.12",
     "wdio-spec-reporter": "^0.1.5",
     "webdriverio": "^5.18.2"
   },
-  "dependencies": {},
+  "dependencies": {
+    "cucumber": "^6.0.5",
+    "chai": "^4.2.0"
+  },
   "babel": {
     "presets": [
       [
