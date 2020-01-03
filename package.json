@@ -40,6 +40,7 @@
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.9.0",
     "eslint-plugin-import": "^2.19.1",
+    "husky": "^3.1.0",
     "prettier-eslint": "^9.0.1",
     "wdio-selenium-standalone-service": "0.0.12",
     "wdio-spec-reporter": "^0.1.5",
