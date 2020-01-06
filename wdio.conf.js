@@ -37,7 +37,7 @@ exports.config = {
                 outputDir: './test/reports/junit-results/',
                 outputFileFormat: (opts) => {
                     // optional
-                    return `TEST-wdio.junit.${opts.cid}.html`;
+                    return `TEST-wdio.junit.${opts.cid}.xml`;
                 },
             },
         ],
