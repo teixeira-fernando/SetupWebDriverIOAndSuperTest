@@ -3,13 +3,33 @@
 # Stack: 
 * NPM
 * WebDriverIO
+* Babel (to include ES6 support)
 * Zalenium
+* Selenium Grid via Docker compose file
 * Cucumber
 * Allure Report
+* EsLint
+* Prettier
+* Husky
 
 # Scripts:
-* Execução de testes: npm run test
+* Test Execution Locally: 
+> npm run test:local
+* Test Execution remotely: 
+> npm run test:remoteGrid
+* Check code format:
+> npm run code:check
+* Fix code issues:
+> npm run code:format
+* To generate Allure Report:
+> npm run allure-report
 
-Outras configurações possíveis do zalenium:
+#Hooks
+
+I have configured using Husky, a hook for before the commit to execute the code checker, with ESLint and Prettier
+
+# Other stuff
+
+Another possible configuration for zalenium:
 
  * "zalenium:setup": "docker run --rm -ti --name zalenium -p 4444:4444 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/videos:/home/seluser/videos --privileged dosel/zalenium start --chromeContainers 3 --firefoxContainers 2"
