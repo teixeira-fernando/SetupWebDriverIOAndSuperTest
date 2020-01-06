@@ -4,3 +4,4 @@ errorShots/
 **/reports/
 allure-report/
 .idea/
+yarn.lock
