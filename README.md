@@ -24,7 +24,7 @@
 * To generate Allure Report:
 > npm run allure-report
 
-#Hooks
+# Hooks
 
 I have configured using Husky, a hook for before the commit to execute the code checker, with ESLint and Prettier
 
@@ -32,4 +32,4 @@ I have configured using Husky, a hook for before the commit to execute the code 
 
 Another possible configuration for zalenium:
 
- * "zalenium:setup": "docker run --rm -ti --name zalenium -p 4444:4444 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/videos:/home/seluser/videos --privileged dosel/zalenium start --chromeContainers 3 --firefoxContainers 2"
+ > "zalenium:setup": "docker run --rm -ti --name zalenium -p 4444:4444 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/videos:/home/seluser/videos --privileged dosel/zalenium start --chromeContainers 3 --firefoxContainers 2"
