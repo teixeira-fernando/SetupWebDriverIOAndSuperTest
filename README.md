@@ -1,4 +1,4 @@
-# E2E Tests with WebDriver IO - Setup
+# E2E Tests with WebDriver IO and API tests with SuperTest - Setup
 
 # Stack: 
 * NPM
@@ -11,6 +11,9 @@
 * EsLint
 * Prettier
 * Husky
+* Chai
+* Super Test + Mocha (For API Tests)
+* Dotenv (For environment variables setup)
 
 # Scripts:
 * Test Execution Locally: 
@@ -23,6 +26,8 @@
 > npm run code:format
 * To generate Allure Report:
 > npm run allure-report
+* To execute API tests:
+> npm run test:api
 
 # Hooks
 
