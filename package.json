@@ -14,11 +14,12 @@
     "test:withDockerSetup": "npm run docker:up:grid && npm run test:remoteGrid",
     "allure-report": "node_modules/.bin/allure generate ./test/reports/allure-results -c && allure open",
     "code:check": "npm run code:lint && npm run code:prettier",
-    "code:format": "npm run code:lint --fix --quiet && npm run code:prettier --write",
+    "code:format": "npm run code:lint --fix && ./node_modules/.bin/prettier \"**/*.js*\" --write",
     "code:lint": "eslint .",
     "code:prettier": "./node_modules/.bin/prettier --check \"**/*.js*\"",
     "test:api:generateReport": "./node_modules/.bin/_mocha test/api/*.js --reporter mocha-junit-reporter --reporterOptions mochaFile=./test/reports/junit-results/apiJunitReport.xml",
-    "test:api": "./node_modules/.bin/_mocha test/api/*.js"
+    "test:api": "./node_modules/.bin/_mocha test/api/*.js",
+    "test:performance": "./node_modules/.bin/wdio wdio.conf.performance.js"
   },
   "keywords": [],
   "author": "",
@@ -50,6 +51,7 @@
     "mocha": "^7.0.0",
     "mocha-junit-reporter": "^1.23.1",
     "mocha-multi-reporters": "^1.1.7",
+    "prettier": "^1.19.1",
     "prettier-eslint": "^9.0.1",
     "supertest": "^4.0.2",
     "wdio-chromedriver-service": "^5.0.2",

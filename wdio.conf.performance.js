@@ -1,12 +1,14 @@
 exports.config = {
     specs: ['./test/performance/**/*.js'],
     exclude: [],
-     capabilities: [{
-        browserName: 'chrome',
-        'goog:chromeOptions': {
-          args: ['--headless'],
+    capabilities: [
+        {
+            browserName: 'chrome',
+            'goog:chromeOptions': {
+                args: ['--headless'],
+            },
         },
-    }],
+    ],
     path: '/',
     port: 9515,
     sync: true,
@@ -22,12 +24,12 @@ exports.config = {
     chromeDriverArgs: ['--port=9515'], // default for ChromeDriver
     framework: 'mocha',
     mochaOpts: {
-      timeout: 50000
+        timeout: 50000,
     },
     before() {
         const chai = require('chai');
         global.expect = chai.expect;
         global.assert = chai.assert;
         chai.Should();
-    }
+    },
 };
