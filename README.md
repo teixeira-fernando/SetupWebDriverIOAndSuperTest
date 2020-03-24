@@ -6,7 +6,7 @@
 * Babel (to include ES6 support)
 * Zalenium
 * Selenium Grid via Docker compose file
-* Cucumber
+* Mocha
 * Allure Report
 * EsLint
 * Prettier
