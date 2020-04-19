@@ -1,3 +1,6 @@
+const allure = require('@wdio/allure-reporter').default;
+const utilities = require('./test/e2e/support/utilities.js');
+
 exports.config = {
     debug: process.env.DEBUG === '1',
     execArgv: process.env.DEBUG === '1' ? ['--inspect-brk=127.0.0.1:5859'] : [],
@@ -9,21 +12,21 @@ exports.config = {
         },
     ],
     sync: true,
-    logLevel: 'info',
+    logLevel: 'debug',
     outputDir: './test/reports/output',
+    screenshotPath: './test/reports/errorShots/',
     coloredLogs: true,
     deprecationWarnings: true,
     bail: 0,
     baseUrl: 'http://todomvc.com/examples/angularjs/#/',
-    waitforTimeout: 50000,
+    waitforTimeout: 10000,
     connectionRetryTimeout: 90000,
     connectionRetryCount: 3,
     services: ['selenium-standalone'],
-    framework: 'mocha',
-    mochaOpts: {
-        ui: 'bdd',
-        timeout: 30000,
-        compilers: ['@babel/register'],
+    framework: 'jasmine',
+    jasmineNodeOpts: {
+        defaultTimeoutInterval: 900000,
+        helpers: [require.resolve('@babel/register')],
     },
     reporters: [
         'spec',
@@ -31,7 +34,7 @@ exports.config = {
             'allure',
             {
                 outputDir: './test/reports/allure-results/',
-                disableWebdriverStepsReporting: false,
+                disableWebdriverStepsReporting: true,
                 disableWebdriverScreenshotsReporting: false,
                 useCucumberStepReporter: false,
             },
@@ -53,9 +56,56 @@ exports.config = {
         global.expect = chai.expect;
         global.assert = chai.assert;
         chai.Should();
+
+        global.allure = allure;
+        global.utilities = utilities;
+        browser.setWindowSize(1440, 800);
     },
-    afterTest() {
+    beforeSuite: function(suite) {
+        allure.addFeature(suite.name);
+    },
+    beforeTest: function(test, context) {
+        allure.addEnvironment('BROWSER', browser.capabilities.browserName);
+        allure.addEnvironment('BROWSER_VERSION', browser.capabilities.version);
+        allure.addEnvironment('PLATFORM', browser.capabilities.platform);
+    },
+    afterTest: function(
+        test,
+        context,
+        { error, result, duration, passed, retries },
+    ) {
+        if (error !== undefined) {
+            try {
+                var today = new Date();
+                var date =
+                    today.getFullYear() +
+                    '-' +
+                    (today.getMonth() + 1) +
+                    '-' +
+                    today.getDate();
+                var time =
+                    today.getHours() +
+                    ':' +
+                    today.getMinutes() +
+                    ':' +
+                    today.getSeconds();
+                var dateTime = date + ' ' + time;
+                utilities.takeScreenshot(
+                    dateTime +
+                        '_' +
+                        test.title +
+                        '_' +
+                        browser.capabilities.browserName,
+                    true,
+                );
+            } catch {
+                console.log('>> Capture Screenshot Failed!');
+            }
+        }
+        //browser.reloadSession();
+        browser.clearSessionStorage();
         browser.clearLocalStorage();
+        browser.deleteCookies();
         browser.refresh();
     },
 };

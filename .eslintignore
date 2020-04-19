@@ -6,3 +6,5 @@ yarn.lock
 babel.config.js
 jsconfig.json
 test/reports/
+wdio.conf.js
+wdio.conf.remote.js

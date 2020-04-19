@@ -19,6 +19,7 @@ module.exports = {
         $: true,
         $$: true,
         assert: true,
+        allure: true,
     },
     env: {
         mocha: true,
