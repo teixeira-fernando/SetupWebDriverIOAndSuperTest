@@ -20,6 +20,7 @@ module.exports = {
         $$: true,
         assert: true,
         allure: true,
+        request: true,
     },
     env: {
         mocha: true,

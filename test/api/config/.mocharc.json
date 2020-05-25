@@ -1,0 +1,9 @@
+{
+  "reporter": "spec",
+  "compiler": "@babel/register",
+  "require": "@babel/register",
+  "timeout": 20000,
+  "recursive": true,
+  "file": "test/api/helper/helper",
+  "global": ["request"]
+}
